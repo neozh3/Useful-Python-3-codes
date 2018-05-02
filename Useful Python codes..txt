@@ -1,0 +1,68 @@
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#To convert all .txt files in the folder to list1
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import glob
+import os
+
+file_list = glob.glob(os.path.join(os.getcwd(), "C:\Users\ZiHung\Desktop\CTI_PM\Switch\Switch", "*.txt"))
+
+list1 = []
+
+for file_path in file_list:
+    with open(file_path) as f_input:
+        list1.append(f_input.read())
+		
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
+#Prompts user to choose directory of folder, capturing file path as string (Python 3)
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+from tkinter import *
+from tkinter import filedialog
+root = Tk()
+root.directory = filedialog.askdirectory()
+print (root.directory)
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~		
+#Regular Expression to capture show command output till next -> 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import re
+Regex = re.compile(r'\whow health\s(.*?)->', re.DOTALL)
+
+# \whow health\s --> To capture the show health command in the cli followed by whitespace
+#(.*?)->         --> To capture everything until the next -> that appears
+#re.DOTALL       --> To allow '.' to capture new lines (\n). '.' default does not catch new lines
+
+##~~~~~~~~~~~~~~~~Example output~~~~~~~~~~~~~~~~~~~~~~~~~~
+##Show health
+##CMM                  Current    1 Min    1 Hr   1 Day
+##Resources                         Avg      Avg    Avg
+##----------------------+---------+-------+-------+-------
+##CPU                     17       16      15      15
+##Memory                  61       61      61      61
+##
+##
+##LN1596_8B_1-08_R1_CSW01->
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#Regular Expression for show command and number of lines below to capture
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import re		
+regex = re.search(r'\whow system((.*\n){16})', output)
+showsys = regex.group(1)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#seperate string with unit into number and unit
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+s = '6.1G'
+for i,c in enumerate(s):
+    if c not in s:
+        break
+number = s[:i]
+unit = s[i:].lstrip()
+
+
+
+
+
