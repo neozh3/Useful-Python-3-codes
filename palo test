@@ -1,0 +1,27 @@
+from panos import firewall
+from panos.objects import AddressObject,AddressGroup
+
+fw = firewall.Firewall('192.168.1.26', 'admin', 'admin')
+element_response = fw.op('show system info')
+print(element_response.find(".//hostname").text)
+
+
+
+blockIp = AddressObject("2.2.2.3_GSOC_Blacklist", "2.2.2.0/24", description="CRQ00000000 01Nov2021")
+blockIp2 = AddressObject("2.2.2.4_GSOC_Blacklist", "2.2.2.4", description="CRQ00000000 01Nov2021")
+
+fw.add(blockIp)
+fw.add(blockIp2)
+grp=AddressGroup('Blacklist',blockIp)
+fw.add(grp)
+grp2=AddressGroup('Blacklist',blockIp2)
+fw.add(grp2)
+blockIp.create()
+blockIp2.create()
+grp.create()
+grp2.create()
+
+fw.commit()
+#fw.commit_all() for panorama to all fw
+
+fw.pending_changes()
